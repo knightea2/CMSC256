@@ -76,27 +76,34 @@ public class RamString implements WackyStringInterface{
 
 //needs work
     public int countDoubleDigits() {
+        StringBuilder temp = new StringBuilder(string);
         int count = 0;
-        boolean lastDigit = false;
-        boolean lastLastDigit = false;
+        
         for (int i = 0; i < string.length(); i++) {
-            char temp = string.charAt(i);
-
-            if (Character.isDigit(temp)) {
-                if (lastDigit) {
-                    if (!lastLastDigit) {
-                        count+= 1;
-                    }
-                    lastDigit = false;
-                    lastLastDigit = true;
-                }
-                else lastDigit = true;
+            if (Character.isDigit(temp.charAt(i))) {
+                temp.setChar(i, '1');
             }
             else {
-                lastDigit = false;
+                temp.setChar(i, '0');
+        }
+            
+        String tempString = temp.toString();
+        tempString.replace("0110", "2");
+
+           
+        for (int i = 0; i < tempString.length(); i++) {
+            if (temoString.charAt(i) == '2') {
+                count+= 1;
             }
         }
-
+            
+        if (tempString.startsWith("110") {
+            count+= 1;
+        }
+        if (tempString.endsWith("011") {
+            count+= 1:
+        }
+            
         return count;
     }
 
