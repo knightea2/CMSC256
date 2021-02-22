@@ -15,27 +15,37 @@ public class RamString implements WackyStringInterface{
     private String string;
 
 
-
+/**
+* Default constructor. It sets string to "Let's Go Rams and CS@VCU!".
+*/
     public RamString() { this.string = "Let's Go Rams and CS@VCU!"; }
 
-
+/**
+*Pparametized constructor that takes a String input and throws an IllegalArgumentException if null.
+*/
     public RamString(String string) throws IllegalArgumentException{
         if (string == null) {
             throw new IllegalArgumentException("Input cannot be null.");
         }
         this.string = string; }
 
-
+/**
+* Takes a String input and sets string instance variable.
+*/
     public void setWackyString(String string) { this.string = string; }
 
-
+/**
+* Returns string.
+*/
     public String getWackyString() {
         return this.string;
     }
 
 
 
-//works
+/**
+* Returns a string that consists of every third character in the string instance variable.
+*/
     public String getEveryThirdCharacter() {
         String everyThree = "";
         for (int i = 0; i < string.length(); i++) {
@@ -46,7 +56,10 @@ public class RamString implements WackyStringInterface{
         return everyThree;
     }
 
-//works
+/**
+* This method, depending on String input being "even" or "odd", returns the even or odd characters of the string variable. 
+* @param evenOrOdd Is a string input that must be "even" or "odd" or it throws an IllegalArgumentException.
+*/
     public String getEvenOrOddCharacters(String evenOrOdd) throws IllegalArgumentException{
         StringBuilder evenOrOddChars = new StringBuilder();
 
@@ -74,7 +87,9 @@ public class RamString implements WackyStringInterface{
     }
 
 
-//needs work
+/**
+* Counts the number of double digits in the string.
+*/
     public int countDoubleDigits() {
         StringBuilder temp = new StringBuilder(string);
         int count = 0;
@@ -89,6 +104,7 @@ public class RamString implements WackyStringInterface{
             
         String tempString = temp.toString();
         tempString.replace("0110", "2");
+        tempString.replace("2110", "22");
 
            
         for (int i = 0; i < tempString.length(); i++) {
@@ -107,7 +123,9 @@ public class RamString implements WackyStringInterface{
         return count;
     }
 
-//works
+/**
+* Determines whether the string is a valid VCU email or not.
+*/
     public boolean isValidVCUEmail() {
         int atIndex = string.indexOf('@');
         int tagIndex = string.lastIndexOf("vcu.edu");
@@ -132,7 +150,9 @@ public class RamString implements WackyStringInterface{
         }
     }
 
-//works but not fully tested
+/**
+* This method formats the string into a standard phone number format, if there are 10 digits in the string.
+*/
     public String standardizePhoneNumber() {
         StringBuilder phoneNumber = new StringBuilder();
         for (int i = 0; i < string.length(); i++) {
@@ -149,14 +169,19 @@ public class RamString implements WackyStringInterface{
         }
     }
 
-//use setWackyString?
+/**
+* Replaces "00" with "CS@VCU", and "0" with "Go Rams".
+*/
     public void ramifyString() {
         String ramified = string.replace("00", "CS@VCU");
         ramified = ramified.replace("0", "Go Rams");
         string = ramified;
     }
 
-//needs work
+/**
+* Converts all the digits in a specified substring to roman numerals, 0 is not changed.
+* @param 
+*/
     public void convertDigitsToRomanNumeralsInSubstring(int startPosition, int endPosition) throws MyIndexOutOfBoundsException, IllegalArgumentException {
 
         if (startPosition < 1 || endPosition > string.length() - 1) {
