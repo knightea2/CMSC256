@@ -14,15 +14,14 @@ package cmsc256;
 public class RamString implements WackyStringInterface{
     private String string;
 
-
 /**
-* Default constructor. It sets string to "Let's Go Rams and CS@VCU!".
-*/
+ * Default constructor. It sets string to "Let's Go Rams and CS@VCU!".
+ */
     public RamString() { this.string = "Let's Go Rams and CS@VCU!"; }
 
 /**
-*Pparametized constructor that takes a String input and throws an IllegalArgumentException if null.
-*/
+ * Parametized constructor that takes a String input and throws an IllegalArgumentException if null.
+ */
     public RamString(String string) throws IllegalArgumentException{
         if (string == null) {
             throw new IllegalArgumentException("Input cannot be null.");
@@ -30,13 +29,18 @@ public class RamString implements WackyStringInterface{
         this.string = string; }
 
 /**
-* Takes a String input and sets string instance variable.
-*/
-    public void setWackyString(String string) { this.string = string; }
+ * Takes a String input and sets string instance variable.
+ */
+    public void setWackyString(String string) {
+        if (string == null) {
+            throw new IllegalArgumentException("Input cannot be null.");
+        }
+        this.string = string;
+    }
 
 /**
-* Returns string.
-*/
+ * Returns string.
+ */
     public String getWackyString() {
         return this.string;
     }
@@ -44,8 +48,8 @@ public class RamString implements WackyStringInterface{
 
 
 /**
-* Returns a string that consists of every third character in the string instance variable.
-*/
+ * Returns a string that consists of every third character in the string instance variable.
+ */
     public String getEveryThirdCharacter() {
         String everyThree = "";
         for (int i = 0; i < string.length(); i++) {
@@ -57,9 +61,9 @@ public class RamString implements WackyStringInterface{
     }
 
 /**
-* This method, depending on String input being "even" or "odd", returns the even or odd characters of the string variable. 
-* @param evenOrOdd Is a string input that must be "even" or "odd" or it throws an IllegalArgumentException.
-*/
+ * This method, depending on String input being "even" or "odd", returns the even or odd characters of the string variable.
+ * @param evenOrOdd Is a string input that must be "even" or "odd" or it throws an IllegalArgumentException.
+ */
     public String getEvenOrOddCharacters(String evenOrOdd) throws IllegalArgumentException{
         StringBuilder evenOrOddChars = new StringBuilder();
 
@@ -88,44 +92,51 @@ public class RamString implements WackyStringInterface{
 
 
 /**
-* Counts the number of double digits in the string.
-*/
+ * Counts the number of double digits in the string.
+ */
     public int countDoubleDigits() {
         StringBuilder temp = new StringBuilder(string);
         int count = 0;
-        
+
+    //This for loop replaces all non-digits with '0', and all digits with '1'.
         for (int i = 0; i < string.length(); i++) {
             if (Character.isDigit(temp.charAt(i))) {
-                temp.setChar(i, '1');
+                temp.setCharAt(i, '1');
+            } else {
+                temp.setCharAt(i, '0');
             }
-            else {
-                temp.setChar(i, '0');
         }
-            
-        String tempString = temp.toString();
-        tempString.replace("0110", "2");
-        tempString.replace("2110", "22");
+            String tempString = temp.toString();
 
-           
-        for (int i = 0; i < tempString.length(); i++) {
-            if (temoString.charAt(i) == '2') {
+        //replaces double digits with '2'
+            tempString = tempString.replace("0110", "2");
+            tempString = tempString.replace("2110", "22");
+            tempString = tempString.replace("2112", "222");
+
+        //for each '2' add 1 to count
+            for (int j = 0; j < tempString.length(); j++) {
+                if (tempString.charAt(j) == '2') {
+                    count+= 1;
+                }
+            }
+        //check if there are double digits at the beginning or end
+            if (tempString.startsWith("110")) {
                 count+= 1;
             }
-        }
-            
-        if (tempString.startsWith("110") {
-            count+= 1;
-        }
-        if (tempString.endsWith("011") {
-            count+= 1:
-        }
-            
-        return count;
+            if (tempString.endsWith("011")) {
+                count+= 1;
+            }
+        //check if the string is just one double digit
+            if (tempString.equals("11")) {
+                return 1;
+            }
+
+            return count;
     }
 
 /**
-* Determines whether the string is a valid VCU email or not.
-*/
+ * Determines whether the string is a valid VCU email or not.
+ */
     public boolean isValidVCUEmail() {
         int atIndex = string.indexOf('@');
         int tagIndex = string.lastIndexOf("vcu.edu");
@@ -136,7 +147,7 @@ public class RamString implements WackyStringInterface{
         if (!string.contains("vcu.edu") && !string.contains("mymail.vcu.edu")) {
             return false;
         }
-        if(!string.endsWith("edu")) {
+        if(!string.endsWith("vcu.edu")) {
             return false;
         }
         if (atIndex < 1) {
@@ -151,10 +162,12 @@ public class RamString implements WackyStringInterface{
     }
 
 /**
-* This method formats the string into a standard phone number format, if there are 10 digits in the string.
-*/
+ * This method formats the string into a standard phone number format, if there are 10 digits in the string.
+ */
     public String standardizePhoneNumber() {
         StringBuilder phoneNumber = new StringBuilder();
+
+        //retrieves all the digits from the string
         for (int i = 0; i < string.length(); i++) {
             char temp = string.charAt(i);
             if (Character.isDigit(temp)) {
@@ -170,28 +183,31 @@ public class RamString implements WackyStringInterface{
     }
 
 /**
-* Replaces "00" with "CS@VCU", and "0" with "Go Rams".
-*/
+ * Replaces "00" with "CS@VCU", and "0" with "Go Rams".
+ */
     public void ramifyString() {
-        String ramified = string.replace("00", "CS@VCU");
+        String ramified = string.replace("000", "111");
+        ramified = ramified.replace("00", "CS@VCU");
         ramified = ramified.replace("0", "Go Rams");
+        ramified = ramified.replace("111", "000");
         string = ramified;
     }
 
 /**
-* Converts all the digits in a specified substring to roman numerals, 0 is not changed.
-* @param 
-*/
+ * Converts all the digits in a specified substring to roman numerals, 0 is not changed.
+ * @param startPosition sets start position.
+ * @param endPosition sets end position.
+ */
     public void convertDigitsToRomanNumeralsInSubstring(int startPosition, int endPosition) throws MyIndexOutOfBoundsException, IllegalArgumentException {
 
-        if (startPosition < 1 || endPosition > string.length() - 1) {
+        if (startPosition < 1 || endPosition > string.length()) {
             throw new MyIndexOutOfBoundsException("Start or End position invalid.");
         }
         if (startPosition > endPosition) {
             throw new IllegalArgumentException("Start position cannot be greater than End position.");
         }
 
-        String selectedPortion = string.substring(startPosition - 1, endPosition - 1);
+        String selectedPortion = string.substring(startPosition - 1, endPosition);
         selectedPortion = selectedPortion.replace("1", "I");
         selectedPortion = selectedPortion.replace("2", "II");
         selectedPortion = selectedPortion.replace("3", "III");
@@ -202,7 +218,7 @@ public class RamString implements WackyStringInterface{
         selectedPortion = selectedPortion.replace("8", "VIII");
         selectedPortion = selectedPortion.replace("9", "IX");
 
-        string = string.replace(string.substring(startPosition - 1, endPosition - 1), selectedPortion);
+        string = string.replace(string.substring(startPosition - 1, endPosition), selectedPortion);
 
 
 
